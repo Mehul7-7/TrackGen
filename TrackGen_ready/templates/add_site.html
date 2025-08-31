@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}Add Site — TrackGen{% endblock %}
+{% block body %}
+<div class="min-h-screen flex">
+  <aside class="w-64 bg-indigo-700 text-white p-6">
+    <h2 class="text-2xl font-bold mb-4">TrackGen</h2>
+    <a href="/dashboard" class="block mb-2">Dashboard</a>
+  </aside>
+  <main class="flex-1 p-8">
+    <h1 class="text-2xl font-semibold mb-4">Add New Site</h1>
+    <form action="/sites/add" method="POST" class="bg-white p-6 rounded shadow-md w-full md:w-2/3">
+      <label class="block mb-2">Site URL</label>
+      <input type="url" name="site_url" placeholder="https://example.com" required class="border px-3 py-2 rounded w-full mb-4">
+      <button class="bg-indigo-600 text-white px-4 py-2 rounded">Add Site</button>
+    </form>
+  </main>
+</div>
+{% endblock %}

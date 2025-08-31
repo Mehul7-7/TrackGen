@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% block title %}Dashboard — TrackGen{% endblock %}
+{% block body %}
+<div class="flex">
+  <aside class="w-64 bg-indigo-700 text-white h-screen p-6 flex flex-col">
+    <h2 class="text-2xl font-bold mb-6">TrackGen</h2>
+    <nav class="flex-1">
+      <ul>
+        <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-indigo-600">Home</a></li>
+        <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-indigo-600">AI Mentions</a></li>
+        <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-indigo-600">Conversational</a></li>
+        <li class="mb-3"><a href="#" class="block p-2 rounded hover:bg-indigo-600">Answer Coverage</a></li>
+        <li class="mb-3"><a href="/sites/add" class="block p-2 rounded hover:bg-indigo-600">Add Site</a></li>
+      </ul>
+    </nav>
+    <div class="mt-6 text-sm text-indigo-100">Sponsored</div>
+    <div class="bg-white text-black text-center rounded-lg p-2 mt-2 shadow">Ad Space</div>
+    <a href="/logout" class="mt-auto text-red-200">Logout</a>
+  </aside>
+  <main class="flex-1 p-8 overflow-auto">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-4">Welcome, {{ user }}</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-medium text-gray-700">AI Mentions</h2>
+        <p class="text-3xl font-bold text-indigo-600">{{ metrics.ai_mentions }}</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-medium text-gray-700">Visibility Score</h2>
+        <p class="text-3xl font-bold text-teal-600">{{ metrics.visibility_score }}</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-medium text-gray-700">Answer Coverage</h2>
+        <p class="text-3xl font-bold text-purple-600">{{ metrics.coverage }}</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h3 class="text-xl font-semibold mb-4">Tracked Keywords</h3>
+      {% if keywords %}
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="text-sm text-gray-500">
+            <tr>
+              <th class="pb-2">Site</th>
+              <th class="pb-2">Keyword</th>
+              <th class="pb-2">Last Checked</th>
+              <th class="pb-2">Result</th>
+              <th class="pb-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for k in keywords %}
+            <tr class="border-t">
+              <td class="py-3">{{ k.site }}</td>
+              <td class="py-3">{{ k.keyword }}</td>
+              <td class="py-3">{{ k.last_checked or '-' }}</td>
+              <td class="py-3">{{ k.last_result or '-' }}</td>
+              <td class="py-3"><button onclick="checkKeyword('{{ k.keyword }}','{{ k.site }}')" class="bg-indigo-600 text-white px-3 py-1 rounded">Check</button></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-gray-600">No keywords yet. Add a site & keywords to begin tracking.</p>
+      {% endif %}
+    </div>
+  </main>
+</div>
+<!-- Ad modal -->
+<div id="ad-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg overflow-hidden w-11/12 md:w-2/3 lg:w-1/2">
+    <div class="p-4 border-b">
+      <h3 class="text-lg font-semibold">Sponsored message</h3>
+    </div>
+    <div class="p-4">
+      <video id="ad-video" width="100%" controls>
+        <source src="{{ url_for('static', filename='sample_ad.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="text-sm text-gray-500 mt-2">Please watch the full ad to continue.</p>
+      <div class="mt-4 text-right">
+        <button id="ad-continue" disabled class="bg-indigo-600 text-white px-4 py-2 rounded opacity-50">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

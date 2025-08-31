@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block title %}Login — TrackGen{% endblock %}
+{% block body %}
+<div class="min-h-screen flex items-center justify-center">
+  <div class="bg-white rounded-2xl shadow-lg p-8 w-96">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">TrackGen</h2>
+    <form action="/login" method="POST" class="flex flex-col gap-4">
+      <input type="text" name="username" placeholder="Email" required class="border rounded-lg px-4 py-2">
+      <input type="password" name="password" placeholder="Password" required class="border rounded-lg px-4 py-2">
+      <button type="submit" class="bg-indigo-600 text-white py-2 rounded-lg">Login</button>
+    </form>
+    <hr class="my-4">
+    <form action="/signup" method="POST" class="mt-2 flex flex-col gap-4">
+      <input type="text" name="username" placeholder="New Email" required class="border rounded-lg px-4 py-2">
+      <input type="password" name="password" placeholder="New Password" required class="border rounded-lg px-4 py-2">
+      <button type="submit" class="bg-purple-600 text-white py-2 rounded-lg">Sign Up</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

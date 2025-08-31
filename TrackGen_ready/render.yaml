@@ -1,0 +1,8 @@
+services:
+- type: web
+  name: TrackGen
+  env: docker
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME
+  branch: main
+  region: oregon
+  plan: free
